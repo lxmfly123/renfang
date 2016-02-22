@@ -1,0 +1,69 @@
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <link href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+  <link href="style.css" rel="stylesheet">
+  <!-- <link href="//cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" rel="stylesheet"> -->
+  <script src="https://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+  <script src="https://cdn.bootcss.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script src="https://cdn1.lncld.net/static/js/av-mini-0.6.4.js"></script>
+  <script src="juicer-min.js"></script>
+  <script src="js.js"></script>
+  <!--引入leancloud-sdk文件-->
+  <!--引入leancloud-sdk文件-->
+</head>
+<body>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-12 col-md-12">
+      <table class="table table-striped table-hover">
+        <tr id="t-head">
+          <th class="width-extreme-narrow"><input type="checkbox" class="mark" id="markall"></th>
+          <th class="width-extreme-narrow"></th>
+          <th class="width-wide"><span>门框编号</span></th>
+          <th class="width-narrow "><span>a1</span></th>
+          <th class="width-narrow "><span>a2</span></th>
+          <th class="width-narrow "><span>b</span></th>
+          <th class="width-narrow "><span>H</span></th>
+          <th class="width-extreme-narrow"><span></span></th>
+          <th class="width-narrow "><span>L</span></th>
+          <th class="width-narrow "><span>c</span></th>
+          <th class="width-narrow "><span>d</span></th>
+          <th class="width-narrow "><span>d1</span></th>
+          <th class="width-wide"><span>①号筋</span></th>
+          <th class="width-wide"><span>②号筋</span></th>
+          <th class="width-wide"><span>③号筋</span></th>
+          <th class="width-wide"><span>④号筋</span></th>
+          <th class="width-wide"><span>⑤号筋</span></th>
+          <th class="width-extreme-narrow"><span></span></th>
+        </tr>
+        <tr id="row-1">
+          <td><div class="checkbox"><label><input type="checkbox" class="mark" id="mark-1"></label></div></td>
+          <td><button type="button" class="btn btn-default add" id="add-1"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></td>
+          <td><input class="form-control model-cell" id="model-cell-1" type="text" placeholder="HFM1320(5)-E1" value="HFM1320(5)-E1"></td>
+          <td><input class="form-control a-cell" id="a1-1" type="text" placeholder="400" value="400"></td>
+          <td><input class="form-control a-cell" id="a2-1" type="text" placeholder="400" value="400"></td>
+          <td><input class="form-control b-cell" id="b-1" type="text" placeholder="400" value="400"></td>
+          <td><input class="form-control H-cell" id="H-1" type="text" placeholder="3150" value="3150"></td>
+          <td><button type="button" class="btn btn-success ok" id="ok-1"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></button></td>
+          <td><input class="form-control L-cell" id="L-1" type="text" placeholder="-" readonly></td>
+          <td><input class="form-control c-cell" id="c-1" type="text" placeholder="300" readonly></td>
+          <td><input class="form-control d-cell" id="d-1" type="text" placeholder="550" readonly></td>
+          <td><input class="form-control d1-cell" id="d1-1" type="text" placeholder="500" readonly></td>
+          <td><input class="form-control bar-type1-cell" id="bar1-1" type="text" placeholder="-" readonly></td>
+          <td><input class="form-control bar-type1-cell" id="bar2-1" type="text" placeholder="-" readonly></td>
+          <td><input class="form-control bar-type1-cell" id="bar3-1" type="text" placeholder="E12@150" readonly></td>
+          <td><input class="form-control bar-type2-cell" id="bar4-1" type="text" placeholder="3E16" readonly></td>
+          <td><input class="form-control bar-type2-cell" id="bar5-1" type="text" placeholder="6E25" readonly></td>
+          <td><button type="button" class="btn btn-danger remove" id="remove-1"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
+</body>
+</html>
+

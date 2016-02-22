@@ -1,0 +1,22 @@
+.width-extreme-narrow {
+	width: 2em;
+}
+.width-narrow {
+	width: 6em;
+}
+
+.width-middle {
+	width: 10em;
+}
+
+.width-wide {
+	width: 14em;
+}
+
+model-cell {
+	text-transform: uppercase;
+}
+
+th > span {
+	margin-left: 0.7em;
+}
