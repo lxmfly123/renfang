@@ -88,8 +88,6 @@ router.use('/', function(req, res, next) {
 router.use('/', function(req, res, next) {
   if(req.query.modelName !== '') {
     model.modelName = req.query.modelName;
-    console.log(model.modelName);
-    // model.parseName();
     queryModel(function(result) {
       model.modelClass = result;
       next();
@@ -146,11 +144,6 @@ router.use('/', function(req, res, next) {
     bar5: model.bar5,
     rowId: parseInt(req.query.rowId)
   }
-
-  console.log(model._H.roundedValue);
-  console.log(model.loadGrade);
-  console.log(model.bar5);
-
   res.send(result);
 });
 
