@@ -45,25 +45,9 @@ app.use(function(req, res, next) {
 });
 
 app.get('/', function(req, res) {
-  res.render('index', { currentTime: new Date() });
+  // res.render('index', { currentTime: new Date() });
+  res.send('It works! ');
 });
-
-// 自定义的中间件
-// app.param('id', function (req, res, next, id) {
-//   console.log('CALLED ONLY ONCE');
-//   next();
-// });
-
-// app.use('/user/:id', function(req, res, next) {
-//   console.log('Request URL:', req.originalUrl);
-//   next();
-// }, function (req, res, next) {
-//   console.log('Request Type:', req.method);
-//   res.send('aaa')
-//   // next();
-// });
-
-
 
 // 可以将一类的路由单独保存在一个文件中
 app.use('/todos', todos);

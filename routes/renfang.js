@@ -98,7 +98,8 @@ router.use('/', function(req, res, next) {
 });
 
 router.use('/', function(req, res, next) {
-  console.log('\n------------------查询开始---------------------\n');
+  console.log('\n--------------------- 查询开始 -----------------------\n');
+  console.log('-- ' + new Date() + ' --\n');
 
   if(req.query.a1 !== '') {
     model.a1 = parseInt(req.query.a1);
@@ -126,10 +127,11 @@ router.use('/', function(req, res, next) {
 });
 
 router.use('/', function(req, res, next) {
-  console.log('\n------------------查询结束---------------------\n');
+  console.log('\n--------------------- 查询结束 -----------------------\n');
 
   var result = {
-    a1: model.a1,
+    model: {
+      a1: model.a1,
     a2: model.a2,
     c: model.c,
     H: model.H,
@@ -142,6 +144,8 @@ router.use('/', function(req, res, next) {
     bar3: model.bar3,
     bar4: model.bar4,
     bar5: model.bar5,
+    },
+    
     rowId: parseInt(req.query.rowId)
   }
   res.send(result);

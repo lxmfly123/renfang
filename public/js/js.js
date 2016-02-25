@@ -123,9 +123,10 @@ PageState.prototype.getRowById = function(id) {
 
 // Row 构造方法
 function Row() {
-	this.shouldQuery = true;
 	this.id;
 	this.model = new Model();
+	this.lastModel = new Model();
+	this._shouldQuery;
 
 	if (pageState.latestId === undefined) {
 		this.id = 1;
@@ -143,6 +144,28 @@ function Row() {
 Object.defineProperty(Row.prototype, 'index', {
 	get: function() {
 		return pageState.rows.map(function(e) { return e.id; }).indexOf(this.id);
+	}
+});
+
+Object.defineProperty(Row.prototype, 'shouldQuery', {
+	get: function() {
+		if (this.model.modelName !== this.lastModel.modelName) {
+			this._shouldQuery = true;
+		} else if(this.model.a1 !== this.lastModel.a1) {
+			this._shouldQuery = true;
+		} else if(this.model.a2 !== this.lastModel.a2) {
+			this._shouldQuery = true;
+		} else if(this.model.b !== this.lastModel.b) {
+			this._shouldQuery = true;
+		} else if(this.model.H !== this.lastModel.H) {
+			this._shouldQuery = true;
+		} else {
+			this._shouldQuery = false;
+		}
+		return this._shouldQuery;
+	},
+	set: function(value) {
+		this._shouldQuery = value;
 	}
 });
 
@@ -251,35 +274,73 @@ $(document).ready(function() {
 
   /*** 改为 nodejs 后台后的分割线 ***/
 
-	var url;
+  function collectRawDataForRow(row) {
+  	var model = row.model;
+		model.modelName = $(row.idFor(HTMLId.model)).val();
+    model.a1 = $(row.idFor(HTMLId.a1)).val();
+    model.a2 = $(row.idFor(HTMLId.a2)).val();
+    model.b = $(row.idFor(HTMLId.b)).val();
+    model.H = $(row.idFor(HTMLId.H)).val();
+  }
 
 	function fillWith(data) {
 		var row = pageState.getRowById(parseInt(data.rowId));
-		console.log(data.rowId)
+		var model = data.model;
 
-		$(row.idFor(HTMLId.L)).val(data.L);
-		$(row.idFor(HTMLId.c)).val(data.c);
-		$(row.idFor(HTMLId.d)).val(data.d);
-		$(row.idFor(HTMLId.d1)).val(data.d1);
-		$(row.idFor(HTMLId.bar1)).val(data.bar1);
-		$(row.idFor(HTMLId.bar2)).val(data.bar2);
-		$(row.idFor(HTMLId.bar3)).val(data.bar3);
-		$(row.idFor(HTMLId.bar4)).val(data.bar4);
-		$(row.idFor(HTMLId.bar5)).val(data.bar5);
+		row.lastModel = row.model;
+		row.model = data.model;
+
+		array = ['L', 'c', 'd', 'd1', 'bar1', 'bar2', 'bar3', 'bar4', 'bar5'];
+
+		array.forEach(function(e) {
+			if (row.model[e] !== row.lastModel[e]) {
+				blinkElement($(row.idFor(HTMLId[e])));
+				$(row.idFor(HTMLId[e])).val(model[e]);
+			} else {
+				console.log(e + ' does not change');
+			}
+		});
 	}
 
-  // 1. 查询门框墙元信息
-  $("table").on('blur', 'input', function() {
-    console.log('detect ' + $(this).attr('class'));
+	function rotateElementOfRow(element, row) {
+		element.css('borderSpacing', 0);
+		if (!row.shouldQuery) {
+			element.css('transform', 'rotate(0deg)');
+			return;
+		} else {
+			element.animate({borderSpacing: 360}, {
+				step: function(now) {
+					if (!row.shouldQuery) {
+						/**  下面这两句有问题。
 
-    pageState.currentRow = pageState.getRowById(parseInt($(this).attr("id").split('-')[1]));
+							但是 `element.stop(true, true)` 会导致单元格值变化时无法提示。暂且如此。
 
-    var model = pageState.currentRow.model;
-    model.modelName = $(pageState.currentRow.idFor(HTMLId.model)).val();
-    model.a1 = $(pageState.currentRow.idFor(HTMLId.a1)).val();
-    model.a2 = $(pageState.currentRow.idFor(HTMLId.a2)).val();
-    model.b = $(pageState.currentRow.idFor(HTMLId.b)).val();
-    model.H = $(pageState.currentRow.idFor(HTMLId.H)).val();
+						**/
+						element.stop(); 
+						rotateElementOfRow(element, row);
+						
+					} else {
+						$(this).css('transform', 'rotate('+ now + 'deg)');
+					}
+	    	},
+	    	easing: 'linear',
+	    	duration: 1000,
+	    	complete: function() {rotateElementOfRow(element, row);}
+			});
+		}
+	}
+
+	function query(row) {
+		console.log('*** query ***');
+
+		$(row.idFor(HTMLId.okButton)).attr('class','btn btn-warning');
+		$(row.idFor(HTMLId.okButton)).children().attr('class', 'glyphicon glyphicon-refresh');
+
+		rotateElementOfRow($(row.idFor(HTMLId.okButton)).children(), row);
+		
+		// $(row.idFor(HTMLId.okButton)).children().css('transform', 'rotate(90deg)');
+
+		var model = row.model;
 
     var url = '/rf?modelName=' + model.modelName;
     url += '&a1=' + model.a1;
@@ -290,7 +351,56 @@ $(document).ready(function() {
 
     $.get(url, function(data, status) {
     	fillWith(data);
+    	collectRawDataForRow(row);
+    	console.log('finished')
+    	// $(row.idFor(HTMLId.okButton)).children().stop(true, true);
+    	$(row.idFor(HTMLId.okButton)).attr('class', 'btn btn-success');
+			$(row.idFor(HTMLId.okButton)).children().attr('class', 'glyphicon glyphicon-ok');
     });
-    // 当修改了门框墙尺寸和荷载级别后，应当立即更新其余信息
+	}
+
+	function blinkElement(element) {
+		console.log('blinkElement')
+		element.animate({backgroundColor: 'rgba(0, 100, 0, 0.6)'}, 'fast');
+  	element.animate({backgroundColor: 'rgba(0, 100, 0, 0)'}, 'slow', function() {
+  		element.css('backgroundColor', '');
+  	});
+	}
+
+	function alertElement(element) {
+		element.animate({backgroundColor: 'rgba(250, 128, 10, 1)'}, 'fast');
+  	element.animate({backgroundColor: 'rgba(250, 128, 10, 0.8)'}, 'normal');
+	}
+
+	function resetElementState(element) {
+		element.animate({backgroundColor: 'white'}, 'fast', function() {
+			element.css('backgroundColor', '');
+		});
+	}
+
+	$("table").on('focus', 'input', function() {
+		console.log('detect ' + $(this).attr('class'));
+		pageState.currentRow = pageState.getRowById(parseInt($(this).attr("id").split('-')[1]));
+		collectRawDataForRow(pageState.currentRow);
+	});
+
+  // 1. 查询门框墙元信息
+  $("table").on('blur', 'input', function() {
+    console.log('detect ' + $(this).attr('class'));
+    var row = pageState.getRowById(parseInt($(this).attr("id").split('-')[1]));
+		collectRawDataForRow(row);
+    if (row.shouldQuery) {
+    	query(row);
+    }
+  });
+
+  $('table').on('keydown', 'input', function(e) {
+  	if(e.keyCode === 13 || e.keyCode === 108) {
+  		pageState.currentRow = pageState.getRowById(parseInt($(this).attr("id").split('-')[1]));
+			collectRawDataForRow(pageState.currentRow);
+  		if(pageState.currentRow.shouldQuery) {
+  			query(pageState.currentRow);
+  		}
+  	}
   });
 });
