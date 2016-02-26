@@ -183,7 +183,7 @@ Row.prototype.createRowHtml = function() {
     <td><input class="form-control {a2Class}" id="{a2Id}-{id}" type="text" placeholder="400" value="500"></td>\
       <td><input class="form-control {bClass}" id="{bId}-{id}" type="text" placeholder="400" value="400"></td>\
       <td><input class="form-control {HClass}" id="{HId}-{id}" type="text" placeholder="3150" value="3150"></td>\
-      <td><button type="button" class="btn btn-success ok" id="ok-{id}" style="display: inline"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></button></td>\
+      <td><button type="button" class="btn btn-danger ok" id="ok-{id}" style="display: inline"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></button></td>\
       <td><input class="form-control L-cell" id="L-{id}" type="text" placeholder="-" readonly></td>\
       <td><input class="form-control c-cell" id="c-{id}" type="text" placeholder="300" readonly></td>\
       <td><input class="form-control d-cell" id="d-{id}" type="text" placeholder="550" readonly></td>\
