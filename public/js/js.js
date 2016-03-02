@@ -32,49 +32,27 @@ String.prototype.format = function(args) {
   return result;
 }
 
-// 定义 html 元素 class 前缀
+// 定义 html 元素 class 和 id 前缀
 if(typeof HTMLClass == "undefined"){
   var HTMLClass = {}
-  HTMLClass.checkbox = 'mark'
+  HTMLClass.checkbox = 'check'
   HTMLClass.addButton = 'add'
-  HTMLClass.model = 'model-cell'
-  HTMLClass.a = 'a-cell'
-  HTMLClass.b = 'b-cell'
-  HTMLClass.H = 'H-cell'
+  HTMLClass.model = 'model'
+  HTMLClass.a1 = 'a1'
+  HTMLClass.a2 = 'a2'
+  HTMLClass.b = 'b'
+  HTMLClass.H = 'H'
   HTMLClass.okButton = 'ok'
-  HTMLClass.L = 'L-cell'
-  HTMLClass.c = 'c-cell'
-  HTMLClass.d = 'd-cell'
-  HTMLClass.d1 = 'd1-cell'
-  HTMLClass.bar1 = 'bar-type1-cell'
-  HTMLClass.bar2 = 'bar-type1-cell'
-  HTMLClass.bar3 = 'bar-type1-cell'
-  HTMLClass.bar4 = 'bar-type2-cell'
-  HTMLClass.bar5 = 'bar-type2-cell'
+  HTMLClass.L = 'L'
+  HTMLClass.c = 'c'
+  HTMLClass.d = 'd'
+  HTMLClass.d1 = 'd1'
+  HTMLClass.bar1 = 'bar1'
+  HTMLClass.bar2 = 'bar2'
+  HTMLClass.bar3 = 'bar3'
+  HTMLClass.bar4 = 'bar4'
+  HTMLClass.bar5 = 'bar5'
   HTMLClass.removeButton = 'remove'
-}
-
-// 定义 html 元素 id 前缀
-if(typeof HTMLId == "undefined"){
-  var HTMLId = {}
-  HTMLId.checkbox = 'mark'
-  HTMLId.addButton = 'add'
-  HTMLId.model = 'model'
-  HTMLId.a1 = 'a1'
-  HTMLId.a2 = 'a2'
-  HTMLId.b = 'b'
-  HTMLId.H = 'H'
-  HTMLId.okButton = 'ok'
-  HTMLId.L = 'L'
-  HTMLId.c = 'c'
-  HTMLId.d = 'd'
-  HTMLId.d1 = 'd1'
-  HTMLId.bar1 = 'bar1'
-  HTMLId.bar2 = 'bar2'
-  HTMLId.bar3 = 'bar3'
-  HTMLId.bar4 = 'bar4'
-  HTMLId.bar5 = 'bar5'
-  HTMLId.removeButton = 'remove'
 }
 
 // 定义新建 Row 对象模式的枚举
@@ -141,6 +119,26 @@ function Row() {
 	pageState.rows.push(this);
 }
 
+function Row2() {
+	this.html = {}
+	this.id;
+	this.model = new Model();
+	this.lastModel = new Model();
+	this._shouldQuery;
+
+	if (pageState.latestId === undefined) {
+		this.id = 1;
+	} else {
+		this.id = pageState.latestId + 1;
+	}
+
+	pageState.latestId = this.id;
+
+	this.createRowHtml();
+
+	pageState.rows.push(this);
+}
+
 Object.defineProperty(Row.prototype, 'index', {
 	get: function() {
 		return pageState.rows.map(function(e) { return e.id; }).indexOf(this.id);
@@ -169,65 +167,28 @@ Object.defineProperty(Row.prototype, 'shouldQuery', {
 	}
 });
 
-Row.prototype.idFor = function(HTMLId) {
-  return '#' + HTMLId + '-' + this.id;
-}
+// Row.prototype.idFor = function(HTMLClass) {
+//   return '#' + HTMLClass + '-' + this.id;
+// }
 
-Row.prototype.createRowHtml = function() {
-  var newTr = '\
-    <tr id="row-{id}">\
-    <td><div class="checkbox"><label><input type="checkbox" class="{checkboxClass}" id="{checkboxId}-{id}"></label></div></td>\
-    <td><button type="button" class="btn btn-default add" id="add-{id}"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></td>\
-    <td><input class="form-control {modelClass}" id="{modelId}-{id}" type="text" placeholder="HFM1320(5)-E1" value="HFM1320(5)-E1"></td>\
-    <td><input class="form-control {a1Class}" id="{a1Id}-{id}" type="text" placeholder="400" value="400"></td>\
-    <td><input class="form-control {a2Class}" id="{a2Id}-{id}" type="text" placeholder="400" value="500"></td>\
-      <td><input class="form-control {bClass}" id="{bId}-{id}" type="text" placeholder="400" value="400"></td>\
-      <td><input class="form-control {HClass}" id="{HId}-{id}" type="text" placeholder="3150" value="3150"></td>\
-      <td><button type="button" class="btn btn-danger ok" id="ok-{id}" style="display: inline"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></button></td>\
-      <td><input class="form-control L-cell" id="L-{id}" type="text" placeholder="-" readonly></td>\
-      <td><input class="form-control c-cell" id="c-{id}" type="text" placeholder="300" readonly></td>\
-      <td><input class="form-control d-cell" id="d-{id}" type="text" placeholder="550" readonly></td>\
-      <td><input class="form-control d1-cell" id="d1-{id}" type="text" placeholder="500" readonly></td>\
-      <td><input class="form-control bar-type1-cell" id="bar1-{id}" type="text" placeholder="-" readonly></td>\
-      <td><input class="form-control bar-type1-cell" id="bar2-{id}" type="text" placeholder="-" readonly></td>\
-      <td><input class="form-control bar-type1-cell" id="bar3-{id}" type="text" placeholder="E12@150" readonly></td>\
-      <td><input class="form-control bar-type2-cell" id="bar4-{id}" type="text" placeholder="3E16" readonly></td>\
-      <td><input class="form-control bar-type2-cell" id="bar5-{id}" type="text" placeholder="6E25" readonly></td>\
-      <td><button type="button" class="btn btn-danger remove" id="remove-{id}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td>\
-  </tr>'.format({
-    id: this.id,
-    checkboxClass: HTMLClass.checkbox,
-    checkboxId: HTMLId.checkbox,
-    addClass: HTMLClass.addButton,
-    addId: HTMLId.addButton,
-    modelClass: HTMLClass.model,
-    modelId: HTMLId.model,
-    a1Class: HTMLClass.a,
-    a1Id: HTMLId.a1,
-    a2Class: HTMLClass.a,
-    a2Id: HTMLId.a2,
-    bClass: HTMLClass.b,
-    bId: HTMLId.b,
-    HClass: HTMLClass.H,
-    HId: HTMLId.H,
-    // unfinished ...
-  });
+// Row.prototype.createRowHtml = function() {
+//   var newTr = ''
 
-  if (this.id === 1) {
-    $('#' + 't-head').after(newTr);
-  } else {
-    $(pageState.currentRow.idFor('row')).after(newTr);
-  }
-}
+//   if (this.id === 1) {
+//     $('#' + 't-head').after(newTr);
+//   } else {
+//     $(pageState.currentRow.idFor('row')).after(newTr);
+//   }
+// }
 
-Row.prototype.remove = function() {
-  if (pageState.rows.length > 1) {
-    $(this.idFor('row')).remove();
-    pageState.rows.splice(this.index, 1);
-  } else {
-    alert("至少要有一行");
-  }
-}
+// Row.prototype.remove = function() {
+//   if (pageState.rows.length > 1) {
+//     $(this.idFor('row')).remove();
+//     pageState.rows.splice(this.index, 1);
+//   } else {
+//     alert("至少要有一行");
+//   }
+// }
 
 // Model
 
@@ -257,10 +218,113 @@ function Model() {
 var pageState = new PageState();
 
 $(document).ready(function() {
-	pageState.init();
+	// Vue object
+	var header = new Vue({
+		el: '#table-header',
+		data: {
+			allSelected: false
+		}, 
+		methods: {
+			selectAll: function() {
+				var allSelected = this.allSelected
+				content.rows.forEach(function(row) {
+					row.status.selected = allSelected;
+				}); 
+			}
+		}
+	});
+
+	var content = new Vue({
+		el: '#table-content',
+		data: {
+			currentRow: undefined,
+			lastRowId: 2,
+			rows: [],
+			htmlClass: HTMLClass
+		},
+		methods: {
+			getRowById: function() {
+				return this.rows.map(function(e) { return e.id; }).indexOf(id);
+			},
+			deleteRow: function(index) {
+				if (this.rows.length > 1) {
+					this.rows.splice(index, 1)
+				} else {
+					alert('至少要有一行');
+				}
+			},
+			insertRow: function(index) {
+				var row = {
+					html: {
+						id: this.lastRowId
+					},
+					status: {
+						selected: false,
+						completed: false,
+						shouldQuery: false,
+						quering: false,
+						valid: {
+							name: false,
+							a1: false,
+							a2: false,
+							b: false,
+							H: false
+						}
+					},
+					model: {
+						name: "HFM1320(5)-E1",
+						a1: 100,
+						a2: 200,
+						b: 400,
+						H: 3300,
+					}
+				};
+				this.rows.splice(index + 1, 0, row);
+				this.lastRowId += 1;
+			}
+		}
+	});
+
+	var row = {
+		html: {
+			id: 1,
+			selected: false
+		},
+		status: {
+			selected: false,
+			completed: false,
+			valid: {
+				name: true,
+				a1: false,
+				a2: false,
+				b: false,
+				H: false
+			}
+		},
+		model: {
+			name: "HFM1320(5)-E1",
+			a1: 100,
+			a2: 200,
+			b: 400,
+			H: 3300,
+		}
+	}
+
+	content.rows.push(row)
+
+	// jQuery UI
+
+	$(".sortable").sortable({
+		axis:'y',
+		revert: true,
+		disabled: true
+	});
+
+	// jQuery
+	$('#table-content .content:even').css('backgroundColor', '#f9f9f9');
 
   // 点击添加行
-  $("table").on('click', '.' + HTMLClass.addButton, function() {
+  $(".row").on('click', '.' + HTMLClass.addButton, function() {
     pageState.currentRow = pageState.getRowById(parseInt($(this).attr("id").split('-')[1]));
     new Row();
   });
@@ -276,11 +340,11 @@ $(document).ready(function() {
 
   function collectRawDataForRow(row) {
   	var model = row.model;
-		model.modelName = $(row.idFor(HTMLId.model)).val();
-    model.a1 = $(row.idFor(HTMLId.a1)).val();
-    model.a2 = $(row.idFor(HTMLId.a2)).val();
-    model.b = $(row.idFor(HTMLId.b)).val();
-    model.H = $(row.idFor(HTMLId.H)).val();
+		model.modelName = $(row.idFor(HTMLClass.model)).val();
+    model.a1 = $(row.idFor(HTMLClass.a1)).val();
+    model.a2 = $(row.idFor(HTMLClass.a2)).val();
+    model.b = $(row.idFor(HTMLClass.b)).val();
+    model.H = $(row.idFor(HTMLClass.H)).val();
   }
 
 	function fillWith(data) {
@@ -294,8 +358,8 @@ $(document).ready(function() {
 
 		array.forEach(function(e) {
 			if (row.model[e] !== row.lastModel[e]) {
-				blinkElement($(row.idFor(HTMLId[e])));
-				$(row.idFor(HTMLId[e])).val(model[e]);
+				blinkElement($(row.idFor(HTMLClass[e])));
+				$(row.idFor(HTMLClass[e])).val(model[e]);
 			} else {
 				console.log(e + ' does not change');
 			}
@@ -333,12 +397,12 @@ $(document).ready(function() {
 	function query(row) {
 		console.log('*** query ***');
 
-		$(row.idFor(HTMLId.okButton)).attr('class','btn btn-warning');
-		$(row.idFor(HTMLId.okButton)).children().attr('class', 'glyphicon glyphicon-refresh');
+		$(row.idFor(HTMLClass.okButton)).attr('class','btn btn-warning');
+		$(row.idFor(HTMLClass.okButton)).children().attr('class', 'glyphicon glyphicon-refresh');
 
-		rotateElementOfRow($(row.idFor(HTMLId.okButton)).children(), row);
+		rotateElementOfRow($(row.idFor(HTMLClass.okButton)).children(), row);
 		
-		// $(row.idFor(HTMLId.okButton)).children().css('transform', 'rotate(90deg)');
+		// $(row.idFor(HTMLClass.okButton)).children().css('transform', 'rotate(90deg)');
 
 		var model = row.model;
 
@@ -352,10 +416,10 @@ $(document).ready(function() {
     $.get(url, function(data, status) {
     	fillWith(data);
     	collectRawDataForRow(row);
-    	console.log('finished')
-    	// $(row.idFor(HTMLId.okButton)).children().stop(true, true);
-    	$(row.idFor(HTMLId.okButton)).attr('class', 'btn btn-success');
-			$(row.idFor(HTMLId.okButton)).children().attr('class', 'glyphicon glyphicon-ok');
+    	console.log('finished');
+    	// $(row.idFor(HTMLClass.okButton)).children().stop(true, true);
+    	$(row.idFor(HTMLClass.okButton)).attr('class', 'btn btn-success');
+			$(row.idFor(HTMLClass.okButton)).children().attr('class', 'glyphicon glyphicon-ok');
     });
 	}
 

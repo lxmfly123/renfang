@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="utf-8">
+	<title>人防</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge;chrome=1">
+	<link href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/stylesheets/jquery-ui.min.css" rel="stylesheet">
+	<link href="/stylesheets/style.css" rel="stylesheet">
+  
+  
+  <script src="/js/vue.js"></script>
+	<script src="https://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+	<script src="https://cdn.bootcss.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<script src="/js/jquery.color.js"></script>
+	<script src="/js/jquery-ui.min.js"></script>
+
+	<script src="/js/js.js"></script>
+</head>
+
+<body>
+	<!-- top nav -->
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+	        <span class="sr-only">Toggle navigation</span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	      </button>
+	      <a class="navbar-brand" href="#">人防</a>
+	    </div>
+	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+	      <ul class="nav navbar-nav">
+	        <li class="active"><a href="#">Link<span class="sr-only">(current)</span></a></li>
+	        <li><a href="#">Link</a></li>
+	        <li class="dropdown">
+	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+	          <ul class="dropdown-menu">
+	            <li><a href="#">Action</a></li>
+	            <li><a href="#">Another action</a></li>
+	            <li><a href="#">Something else here</a></li>
+	            <li role="separator" class="divider"></li>
+	            <li><a href="#">Separated link</a></li>
+	            <li role="separator" class="divider"></li>
+	            <li><a href="#">One more separated link</a></li>
+	          </ul>
+	        </li>
+	      </ul>
+	      <ul class="nav navbar-nav navbar-right">
+	        <li><a href="#">Link</a></li>
+	        <li class="dropdown">
+	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+	          <ul class="dropdown-menu">
+	            <li><a href="#">Action</a></li>
+	            <li><a href="#">Another action</a></li>
+	            <li><a href="#">Something else here</a></li>
+	            <li role="separator" class="divider"></li>
+	            <li><a href="#">Separated link</a></li>
+	          </ul>
+	        </li>
+	      </ul>
+	    </div>
+	  </div>
+	</nav>
+
+	<!-- bottom nav -->
+	<nav class="navbar navbar-inverse navbar-fixed-bottom">
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+	        <span class="sr-only">Toggle navigation</span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	      </button>
+	      <a class="navbar-brand" href="#">人防</a>
+	    </div>
+	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+	      <ul class="nav navbar-nav">
+	        <li class="active"><a href="#">Link<span class="sr-only">(current)</span></a></li>
+	        <li><a href="#">Link</a></li>
+	        <li class="dropdown">
+	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+	          <ul class="dropdown-menu">
+	            <li><a href="#">Action</a></li>
+	            <li><a href="#">Another action</a></li>
+	            <li><a href="#">Something else here</a></li>
+	            <li role="separator" class="divider"></li>
+	            <li><a href="#">Separated link</a></li>
+	            <li role="separator" class="divider"></li>
+	            <li><a href="#">One more separated link</a></li>
+	          </ul>
+	        </li>
+	      </ul>
+	      <ul class="nav navbar-nav navbar-right">
+	        <li><a href="#">Link</a></li>
+	        <li class="dropdown">
+	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+	          <ul class="dropdown-menu">
+	            <li><a href="#">Action</a></li>
+	            <li><a href="#">Another action</a></li>
+	            <li><a href="#">Something else here</a></li>
+	            <li role="separator" class="divider"></li>
+	            <li><a href="#">Separated link</a></li>
+	          </ul>
+	        </li>
+	      </ul>
+	    </div>
+	  </div>
+	</nav>
+
+	<!-- header -->
+	<div class="container-fluid" id="table-header">
+		<div class="row">
+			<div class="col-lg-1 col-md-1"></div>
+			<div class="col-lg-10 col-md-10 content">
+				<div class="col-lg-1 col-md-1">
+					<div class="col-lg-5 col-md-5"><label class="check-label"><input type="checkbox" v-model="allSelected" @change="selectAll" lazy></label></div>
+					<div class="col-lg-7 col-md-7"></div>
+				</div>
+				<div class="col-lg-4 col-md-4">
+					<div class="col-lg-4 col-md-4"><span>门框编号</span></div>
+					<div class="col-lg-7">
+						<div class="col-lg-3 col-md-3"><span>a1</span></div>
+						<div class="col-lg-3 col-md-3"><span>a2</span></div>
+						<div class="col-lg-3 col-md-3"><span>b</span></div>
+						<div class="col-lg-3 col-md-3"><span>H</span></div>
+					</div>
+					<div class="col-lg-1"></div>
+				</div>
+				<div class="col-lg-2 col-md-2">
+					<div class="col-lg-3 col-md-3"><span>L</span></div>
+					<div class="col-lg-3 col-md-3"><span>c</span></div>
+					<div class="col-lg-3 col-md-3"><span>d</span></div>
+					<div class="col-lg-3 col-md-3"><span>d1</span></div>
+				</div>
+				<div class="col-lg-5 col-md-5">
+					<div class="col-lg-2 col-md-2"><span>①号筋</span></div>
+					<div class="col-lg-2 col-md-2"><span>②号筋</span></div>
+					<div class="col-lg-2 col-md-2"><span>③号筋</span></div>
+					<div class="col-lg-3 col-md-2"><span>④号筋</span></div>
+					<div class="col-lg-2 col-md-2"><span>⑤号筋</span></div>
+					<div class="col-lg-1 col-md-1"></div>
+				</div>
+			</div>
+			<div class="col-lg-1 col-md-1"></div>
+		</div>
+	</div>
+
+	<!-- content -->
+	<div class="container-fluid sortable" id="table-content">
+		<template v-for="row in rows">
+		<div class="row" id="row-{{row.html.id}}">
+			<div class="col-lg-1 col-md-1"></div>
+			<div class="col-lg-10 col-md-10 content" v-bind:class="{'even': $index % 2}">
+				<div class="col-lg-1 col-md-1">
+					<div class="col-lg-2 col-md-2"><label class="check-label"><input type="checkbox" class="{{htmlClass.checkbox}}" id="{{htmlClass.checkbox}}-{{row.html.id}}" v-model="row.status.selected"></label></div>
+					<div class="col-lg-2 col-md-2"></div>
+					<div class="col-lg-2 col-md-2"><h4>{{$index + 1}}</h4></div>
+					<div class="col-lg-1 col-md-1"></div>
+					<div class="col-lg-4 col-md-4">
+						<button type="button" class="btn btn-default" class="{{htmlClass.addButton}}" id="{{htmlClass.addButton}}-{{row.html.id}}" @click="insertRow($index)" /><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+					</div>
+					<div class="col-lg-1 col-md-1"></div>
+				</div>
+				<div class="col-lg-4 col-md-4">
+					<div class="col-lg-4 col-md-4 {{row.status.valid.name ? 'has-success' : 'has-warning'}}"><input class="form-control {{htmlClass.model}}" id="{{htmlClass.model}}-{{row.html.id}}" v-model="row.model.name" type="text" placeholder="HFM1320(5)-E1"></div>
+					<div class="col-lg-7">
+						<div class="col-lg-3 col-md-3 {{row.status.valid.a1 ? 'has-success' : 'has-warning'}}"><input class="form-control {{htmlClass.a1}}" id="{{htmlClass.a1}}-{{row.html.id}}" v-model="row.model.a1" type="text" placeholder="1000"></div>
+						<div class="col-lg-3 col-md-3 {{row.status.valid.a1 ? 'has-success' : 'has-warning'}}"><input class="form-control {{htmlClass.a2}}" id="{{htmlClass.a2}}-{{row.html.id}}" v-model="row.model.a2" type="text" placeholder="1000"></div>
+						<div class="col-lg-3 col-md-3 {{row.status.valid.b ? 'has-success' : 'has-warning'}}"><input class="form-control {{htmlClass.b}}" id="{{htmlClass.b}}-{{row.html.id}}" v-model="row.model.b" type="text" placeholder="400"></div>
+						<div class="col-lg-3 col-md-3 {{row.status.valid.H ? 'has-success' : 'has-warning'}}"><input class="form-control {{htmlClass.H}}" id="{{htmlClass.H}}-{{row.html.id}}" v-model="row.model.H" type="text" placeholder="3150"></div>
+					</div>
+					<div class="col-lg-1">
+						<button type="button" class="btn {{row.status.completed ? 'btn-success' : 'btn-warning'}} {{htmlClass.ok}}" id="{{htmlClass.ok}}-{{row.html.id}}">
+							<span class="glyphicon {{row.status.completed ? 'glyphicon-ok' : 'glyphicon-warning-sign'}}" aria-hidden="true"></span>
+						</button>
+					</div>
+				</div>
+				<div class="col-lg-2 col-md-2">
+					<div class="col-lg-3 col-md-3"><div class="well well-sm {{htmlClass.L}}" id="{{htmlClass.L}}-{{row.html.id}}"><span>{{row.model.L}}</span></div></div>
+					<div class="col-lg-3 col-md-3"><div class="well well-sm {{htmlClass.c}}" id="{{htmlClass.c}}-{{row.html.id}}"><span>{{row.model.c}}</span></div></div>
+					<div class="col-lg-3 col-md-3"><div class="well well-sm {{htmlClass.d}}" id="{{htmlClass.d}}-{{row.html.id}}"><span>{{row.model.d}}</span></div></div>
+					<div class="col-lg-3 col-md-3"><div class="well well-sm {{htmlClass.d1}}" id="{{htmlClass.d1}}-{{row.html.id}}"><span>{{row.model.d1}}</span></div></div>
+				</div>
+				<div class="col-lg-5 col-md-5">
+					<div class="col-lg-2 col-md-2"><div class="well well-sm {{htmlClass.bar1}}" id="{{htmlClass.bar1}}-{{row.html.id}}"><span>{{row.model.bar1}}</span></div></div>
+					<div class="col-lg-2 col-md-2"><div class="well well-sm {{htmlClass.bar2}}" id="{{htmlClass.bar2}}-{{row.html.id}}"><span>{{row.model.bar2}}</span></div></div>
+					<div class="col-lg-2 col-md-2"><div class="well well-sm {{htmlClass.bar3}}" id="{{htmlClass.bar3}}-{{row.html.id}}"><span>{{row.model.bar3}}</span></div></div>
+					<div class="col-lg-3 col-md-2"><div class="well well-sm {{htmlClass.bar4}}" id="{{htmlClass.bar4}}-{{row.html.id}}"><span>{{row.model.bar4}}</span></div></div>
+					<div class="col-lg-2 col-md-2"><div class="well well-sm {{htmlClass.bar5}}" id="{{htmlClass.bar5}}-{{row.html.id}}"><span>{{row.model.bar5}}</span></div></div>
+					<div class="col-lg-1 col-md-1">
+						<button type="button" class="btn btn-danger {{htmlClass.removeButton}}" id="{{htmlClass.removeButton}}-{{row.html.id}}" @click="deleteRow($index)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-1 col-md-1"></div>
+		</div>
+		</template>
+	</div>
+	<script type="text/javascript">
+	
+</script>
+</body>
+</html>

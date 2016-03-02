@@ -1,3 +1,8 @@
+/*body {
+	padding-top: 70px;
+	padding-bottom: 30px;
+}
+
 .width-extreme-narrow {
 	width: 2em;
 }
@@ -19,4 +24,61 @@ model-cell {
 
 th > span {
 	margin-left: 0.7em;
+}*/
+
+body {
+	padding-top: 50px;
+	padding-bottom: 50px;
+	font-family: "Microsoft YaHei", 微软雅黑, "MicrosoftJhengHei", 华文细黑, STHeiti, MingLiu;
+}
+
+/*还有问题*/
+.col-lg-10, .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-11, .col-lg-12 {
+	padding-left: 5px;
+	padding-right: 5px;
+}
+.well-sm {
+	text-align: center;
+	padding-top: 6px;
+	height: 34px;
+	text-align: center;
+	margin-bottom: 0px;
+}
+
+.dropdown-menu {
+	z-index: 1002;
+}
+input {
+	text-align: center;
+}
+#table-header {
+	color: #FFF;
+	width: 100%;
+	font-size: 18px;
+	display: block;
+	position: fixed;
+	z-index: 1001;
+}
+#table-header .content {
+	background: gray;
+	padding-top: 10px;
+}
+#table-header span {
+	display: block;
+	text-align: center;
+}
+#table-content {
+	text-align: center;
+	padding-top: 40px;
+}
+#table-content .check-label {
+	padding-top: 80%;
+}
+#table-content .content {
+	padding-top: 4px;
+	padding-bottom: 4px;
+	border-top: 1px solid #ddd;
+}
+#table-content .even {
+	background: #f9f9f9;
 }

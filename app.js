@@ -49,6 +49,11 @@ app.get('/', function(req, res) {
   res.send('It works! ');
 });
 
+app.get('/rftest', function(req, res) {
+  // res.render('index', { currentTime: new Date() });
+  res.render('vuetest');
+});
+
 // 可以将一类的路由单独保存在一个文件中
 app.use('/todos', todos);
 app.use('/rf', renfang);
